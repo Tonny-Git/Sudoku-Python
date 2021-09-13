@@ -74,8 +74,11 @@ class SudokuGrid:
                     
     def key(self, event):
         print ("pressed", repr(event.char))
-        event.widget.delete("all")
-        event.widget.create_text(Settings.window_width/18, Settings.window_width/18, text=event.char, font="Times 25")
+        if event.char in Settings.numbers_char:
+            event.widget.delete("all")
+            event.widget.create_text(Settings.window_width/18, Settings.window_width/18, text=event.char, font="Times 25")
+        elif event.char == "\x08":
+            event.widget.delete("all")
 
     def callback(self, event):
         print ("clicked at", event.x, event.y)
