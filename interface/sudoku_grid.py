@@ -38,12 +38,11 @@ class SudokuGrid:
                 self.cube_frames(frame, i, j)
 
     def cube_frames(self, inner_frame, row, column):
-        #board
         for i in range(0 , 3):
             for j in range(0, 3):
 
                 if self.board[i+row*3][j+column*3] != 0:
-                    frame = tk.Frame(inner_frame, width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5)
+                    frame = tk.Frame(inner_frame, width=(Settings.window_width/9+2), height=(Settings.window_height/9+2), highlightbackground='black', highlightthickness=0.5)
                     frame.grid(row=i, column=j)
                     label = tk.Label(frame, text=f"{self.board[i+row*3][j+column*3]}", font=30)
                     label.place(relx=0.4, rely=0.3)
@@ -52,28 +51,8 @@ class SudokuGrid:
                     canvas.bind("<Key>", self.key)
                     canvas.bind("<Button-1>", self.callback)
                     canvas.grid(row=i, column=j)
-
-
-    # Only for reference, remove when new method is fixed
-    """ def cube_frames_old(self, inner_frame, row, column):
-        #board
-        for i in range(0 , 3):
-            for j in range(0, 3):
-                frame = tk.Frame(inner_frame, width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5)
-                frame.grid(row=i, column=j)
-
-                if self.board[i+row*3][j+column*3] != 0:
-                    label = tk.Label(frame, text=f"{self.board[i+row*3][j+column*3]}", font=30)
-                    label.place(relx=0.4, rely=0.3)
-                else:
-                    canvas = tk.Canvas(frame, bg='White', width=((Settings.window_width/9)-10), height=((Settings.window_height/9)-10))
-                    canvas.bind("<Key>", self.key)
-                    canvas.bind("<Button-1>", self.callback)
-                    canvas.focus_set()
-                    canvas.place(relx=0, rely=0) """
                     
     def key(self, event):
-        print ("pressed", repr(event.char))
         if event.char in Settings.numbers_char:
             event.widget.delete("all")
             event.widget.create_text(Settings.window_width/18, Settings.window_width/18, text=event.char, font="Times 25")
@@ -81,5 +60,4 @@ class SudokuGrid:
             event.widget.delete("all")
 
     def callback(self, event):
-        print ("clicked at", event.x, event.y)
         event.widget.focus_set()
