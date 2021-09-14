@@ -26,14 +26,14 @@ class SudokuGrid:
 
     def main_frame(self):
         print(self.canvas)
-        frame = tk.Frame(self.root, width=Settings.window_width, height=Settings.window_height, highlightbackground='black', highlightthickness=0.5)
+        frame = tk.Frame(self.root, width=Settings.window_width, height=Settings.window_height, highlightbackground='black', highlightthickness=0.5, highlightcolor="black")
         frame.pack()
         self.inner_frames(frame)
 
     def inner_frames(self, main_frame):
         for i in range(0 , 3):
             for j in range(0, 3):
-                frame = tk.Frame(main_frame, width=(Settings.window_width/3), height=(Settings.window_height/3), highlightbackground='black', highlightthickness=0.5)
+                frame = tk.Frame(main_frame, width=(Settings.window_width/3), height=(Settings.window_height/3), highlightbackground='black', highlightthickness=0.5, highlightcolor="black")
                 frame.grid(row=i, column=j)
                 self.cube_frames(frame, i, j)
 
@@ -47,7 +47,7 @@ class SudokuGrid:
                     label = tk.Label(frame, text=f"{self.board[i+row*3][j+column*3]}", font=30)
                     label.place(relx=0.4, rely=0.3)
                 else:
-                    canvas = tk.Canvas(inner_frame, bg='White', width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5)
+                    canvas = tk.Canvas(inner_frame, bg='White', width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5, highlightcolor="blue")
                     canvas.bind("<Key>", self.key)
                     canvas.bind("<Button-1>", self.callback)
                     canvas.grid(row=i, column=j)
@@ -61,3 +61,11 @@ class SudokuGrid:
 
     def callback(self, event):
         event.widget.focus_set()
+
+    #Add later
+    def cube_focus(self, event):
+        pass
+    
+    #Add later
+    def cube_lose_focus(self, event):
+        pass
