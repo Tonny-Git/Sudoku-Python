@@ -1,22 +1,12 @@
 import tkinter as tk
 from settings.settings import Settings
+from logic.sudoku_board import SudokuBoard
 
 class SudokuGrid:
 
     def __init__(self, root):
         self.root = root
-        #Temporary, make into a function later!
-        self.board = [
-            [7, 8, 0, 4, 0, 0, 1, 2, 0],
-            [6, 0, 0, 0, 7, 5, 0, 0, 9],
-            [0, 0, 0, 6, 0, 1, 0, 7, 8],
-            [0, 0, 7, 0, 4, 0, 2, 6, 0],
-            [0, 0, 1, 0, 5, 0, 9, 3, 0],
-            [9, 0, 4, 0, 6, 0, 0, 0, 5],
-            [0, 7, 0, 3, 0, 0, 0, 1, 2],
-            [1, 2, 0, 0, 0, 7, 4, 0, 0],
-            [0, 4, 9, 2, 0, 6, 0, 0, 7]
-        ]
+        self.sudokuBoard = SudokuBoard()
 
         self.canvas = None
         self.build_board()
@@ -41,10 +31,10 @@ class SudokuGrid:
         for i in range(0 , 3):
             for j in range(0, 3):
 
-                if self.board[i+row*3][j+column*3] != 0:
+                if self.sudokuBoard.board[i+row*3][j+column*3] != 0:
                     frame = tk.Frame(inner_frame, width=(Settings.window_width/9+2), height=(Settings.window_height/9+2), highlightbackground='black', highlightthickness=0.5)
                     frame.grid(row=i, column=j)
-                    label = tk.Label(frame, text=f"{self.board[i+row*3][j+column*3]}", font=30)
+                    label = tk.Label(frame, text=f"{self.sudokuBoard.board[i+row*3][j+column*3]}", font=30)
                     label.place(relx=0.4, rely=0.3)
                 else:
                     canvas = tk.Canvas(inner_frame, bg='White', width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5, highlightcolor="#0858d1")
