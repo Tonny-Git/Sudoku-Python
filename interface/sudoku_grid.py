@@ -47,9 +47,11 @@ class SudokuGrid:
                     label = tk.Label(frame, text=f"{self.board[i+row*3][j+column*3]}", font=30)
                     label.place(relx=0.4, rely=0.3)
                 else:
-                    canvas = tk.Canvas(inner_frame, bg='White', width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5, highlightcolor="blue")
+                    canvas = tk.Canvas(inner_frame, bg='White', width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5, highlightcolor="#0858d1")
                     canvas.bind("<Key>", self.key)
                     canvas.bind("<Button-1>", self.callback)
+                    canvas.bind("<FocusIn>", self.cube_focus)
+                    canvas.bind("<FocusOut>", self.cube_lose_focus)
                     canvas.grid(row=i, column=j)
                     
     def key(self, event):
@@ -64,8 +66,10 @@ class SudokuGrid:
 
     #Add later
     def cube_focus(self, event):
+        event.widget.configure(bg="#bae0f7")
         pass
     
     #Add later
     def cube_lose_focus(self, event):
+        event.widget.configure(bg="white")
         pass
