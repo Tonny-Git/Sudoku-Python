@@ -28,3 +28,17 @@ class SudokuBoard:
 
     def create_puzzle(self):
         pass
+
+    def add_value(self, value, row, col):
+        self.board[row][col] = value
+        self.check_if_completed()
+
+    def check_if_completed(self):
+        if not any(0 in x for x in self.board):
+            print(True)
+        else:
+            print(False)
+            for x in range(9):
+                print(f"board: {self.board[x]}  completed board: {self.board_completed[x]} \n")
+                #print(f"row {x}: ", self.board[x] == self.board_completed[x])
+            #print(f"full: {self.board == self.board_completed} \n\n")

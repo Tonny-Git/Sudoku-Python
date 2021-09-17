@@ -15,7 +15,6 @@ class SudokuGrid:
         self.main_frame()
 
     def main_frame(self):
-        print(self.canvas)
         frame = tk.Frame(self.root, width=Settings.window_width, height=Settings.window_height, highlightbackground='black', highlightthickness=0.5, highlightcolor="black")
         frame.pack()
         self.inner_frames(frame)
@@ -38,28 +37,34 @@ class SudokuGrid:
                     label.place(relx=0.4, rely=0.3)
                 else:
                     canvas = tk.Canvas(inner_frame, bg='White', width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5, highlightcolor="#0858d1")
-                    canvas.bind("<Key>", self.key)
+                    canvas.bind("<Key>", lambda event, row=i+row*3, col=j+column*3: self.key(event, row, col))
                     canvas.bind("<Button-1>", self.callback)
                     canvas.bind("<FocusIn>", self.cube_focus)
                     canvas.bind("<FocusOut>", self.cube_lose_focus)
                     canvas.grid(row=i, column=j)
                     
-    def key(self, event):
+    def key(self, event, row, col):
+        #print(f"row: {row}   col: {col}")
         if event.char in Settings.numbers_char:
             event.widget.delete("all")
             event.widget.create_text(Settings.window_width/18, Settings.window_width/18, text=event.char, font="Times 25")
+            self.sudokuBoard.add_value(event.char, row, col)
         elif event.char == "\x08":
             event.widget.delete("all")
+            self.sudokuBoard.add_value(0, row, col)
 
     def callback(self, event):
         event.widget.focus_set()
 
-    #Add later
     def cube_focus(self, event):
         event.widget.configure(bg="#bae0f7")
         pass
     
-    #Add later
     def cube_lose_focus(self, event):
         event.widget.configure(bg="white")
         pass
+
+# Temporary thoughts: 
+# Move the canvas into it's own class named inputBox? 
+# Change label in cube frames to create text.
+# 
