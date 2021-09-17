@@ -7,8 +7,7 @@ class SudokuGrid:
     def __init__(self, root):
         self.root = root
         self.sudokuBoard = SudokuBoard()
-
-        self.canvas = None
+        #self.canvas = None
         self.build_board()
 
     def build_board(self):
@@ -44,11 +43,16 @@ class SudokuGrid:
                     canvas.grid(row=i, column=j)
                     
     def key(self, event, row, col):
-        #print(f"row: {row}   col: {col}")
         if event.char in Settings.numbers_char:
             event.widget.delete("all")
             event.widget.create_text(Settings.window_width/18, Settings.window_width/18, text=event.char, font="Times 25")
-            self.sudokuBoard.add_value(event.char, row, col)
+            solved = self.sudokuBoard.add_value(int(event.char), row, col)
+            if solved == "Error":
+                print("Error in board!")
+            elif solved:
+                #Fix this later
+                print("Puzzle is solved!")
+                self.victory_screen()
         elif event.char == "\x08":
             event.widget.delete("all")
             self.sudokuBoard.add_value(0, row, col)
@@ -63,6 +67,12 @@ class SudokuGrid:
     def cube_lose_focus(self, event):
         event.widget.configure(bg="white")
         pass
+
+    def victory_screen(self):
+        frame = tk.Frame(self.root, width=(Settings.window_width/4), height=(Settings.window_height/10), highlightbackground='green', highlightthickness=0.5)
+        frame.place(x=Settings.window_width/2-Settings.window_width/8, y=Settings.window_width/2-Settings.window_height/20)
+        label = tk.Label(frame, text=f"Puzzle solved!", font=30)
+        label.place(relx=0.1, rely=0.3)
 
 # Temporary thoughts: 
 # Move the canvas into it's own class named inputBox? 

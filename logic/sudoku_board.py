@@ -11,7 +11,7 @@ class SudokuBoard:
             [1, 2, 0, 0, 0, 7, 4, 0, 0],
             [0, 4, 9, 2, 0, 6, 0, 0, 7]
         ]
-        self.board_completed = [
+        self.board_filled = [
             [7, 8, 5, 4, 3, 9, 1, 2, 6],
             [6, 1, 2, 8, 7, 5, 3, 4, 9],
             [4, 9, 3, 6, 2, 1, 5, 7, 8],
@@ -31,14 +31,20 @@ class SudokuBoard:
 
     def add_value(self, value, row, col):
         self.board[row][col] = value
-        self.check_if_completed()
+        return self.check_if_completed()
 
     def check_if_completed(self):
         if not any(0 in x for x in self.board):
-            print(True)
-        else:
-            print(False)
-            for x in range(9):
-                print(f"board: {self.board[x]}  completed board: {self.board_completed[x]} \n")
-                #print(f"row {x}: ", self.board[x] == self.board_completed[x])
-            #print(f"full: {self.board == self.board_completed} \n\n")
+            if self.board == self.board_filled:
+                return True
+            else:
+                return "Error"
+        return False
+
+    # Might not use this!
+    def board_completed(self):
+        print("Game won!")
+
+    # Might not use this!
+    def board_wrong(self):
+        print("Error in board!")
