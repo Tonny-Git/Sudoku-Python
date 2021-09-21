@@ -7,7 +7,9 @@ class SudokuGrid:
     def __init__(self, root):
         self.root = root
         self.sudokuBoard = SudokuBoard()
-        #self.canvas = None
+        self.cubes = []
+        # Add a state to keep track of error message or victory message
+        #self.state = None
         self.build_board()
 
     def build_board(self):
@@ -34,6 +36,7 @@ class SudokuGrid:
                     frame.grid(row=i, column=j)
                     label = tk.Label(frame, text=f"{self.sudokuBoard.board[i+row*3][j+column*3]}", font=30)
                     label.place(relx=0.4, rely=0.3)
+                    self.cubes.append("None")
                 else:
                     canvas = tk.Canvas(inner_frame, bg='White', width=(Settings.window_width/9), height=(Settings.window_height/9), highlightbackground='black', highlightthickness=0.5, highlightcolor="#0858d1")
                     canvas.bind("<Key>", lambda event, row=i+row*3, col=j+column*3: self.key(event, row, col))
@@ -41,6 +44,7 @@ class SudokuGrid:
                     canvas.bind("<FocusIn>", self.cube_focus)
                     canvas.bind("<FocusOut>", self.cube_lose_focus)
                     canvas.grid(row=i, column=j)
+                    self.cubes.append(canvas)
                     
     def key(self, event, row, col):
         if event.char in Settings.numbers_char:
@@ -49,6 +53,7 @@ class SudokuGrid:
             solved = self.sudokuBoard.add_value(int(event.char), row, col)
             if solved == "Error":
                 print("Error in board!")
+                self.show_error()
             elif solved:
                 #Fix this later
                 print("Puzzle is solved!")
@@ -73,6 +78,23 @@ class SudokuGrid:
         frame.place(x=Settings.window_width/2-Settings.window_width/8, y=Settings.window_width/2-Settings.window_height/20)
         label = tk.Label(frame, text=f"Puzzle solved!", font=30)
         label.place(relx=0.1, rely=0.3)
+        for cube in self.cubes:
+            if cube != "None":
+                cube.configure(bg="green")
+                #cube.configure(state="disabled")
+    
+    # implement later
+    def show_error(self):
+        error_pos = self.sudokuBoard.get_difference()
+        for pos in error_pos:
+            #self.cubes[pos[0]][pos[1]].configure(bg="red")
+            #print("pos: ", pos)
+            #print("both: ", pos[0], pos[1])
+            print(self.cubes[pos[0]*10 + pos[1]])
+            #print(self.cubes)
+            pass
+            
+        
 
 # Temporary thoughts: 
 # Move the canvas into it's own class named inputBox? 

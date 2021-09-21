@@ -1,6 +1,17 @@
 class SudokuBoard:
     def __init__(self):
         self.board = [
+            [7, 8, 5, 4, 3, 9, 1, 2, 6],
+            [6, 1, 2, 8, 7, 5, 3, 4, 9],
+            [4, 9, 3, 6, 2, 1, 5, 7, 8],
+            [8, 5, 7, 9, 4, 3, 2, 6, 1],
+            [2, 6, 1, 7, 5, 8, 9, 3, 4],
+            [9, 3, 4, 1, 6, 2, 7, 8, 5],
+            [5, 7, 8, 3, 9, 4, 6, 1, 2],
+            [1, 2, 6, 5, 8, 7, 4, 9, 3],
+            [3, 4, 9, 2, 1, 6, 8, 0, 0]
+        ]
+        self.board2 = [
             [7, 8, 0, 4, 0, 0, 1, 2, 0],
             [6, 0, 0, 0, 7, 5, 0, 0, 9],
             [0, 0, 0, 6, 0, 1, 0, 7, 8],
@@ -48,3 +59,11 @@ class SudokuBoard:
     # Might not use this!
     def board_wrong(self):
         print("Error in board!")
+
+    def get_difference(self):
+        diff_pos = []
+        for i in range(len(self.board)):
+            for j in range(len(self.board)):
+                if self.board[i][j] != self.board_filled[i][j]:
+                    diff_pos.append([i, j])
+        return diff_pos
