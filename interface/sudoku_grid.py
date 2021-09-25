@@ -6,6 +6,7 @@ class SudokuGrid:
 
     def __init__(self, root):
         self.root = root
+        self.state = "ongoing"
         self.sudokuBoard = SudokuBoard()
         self.cubes = []
         # Add a state to keep track of error message or victory message
@@ -57,6 +58,7 @@ class SudokuGrid:
             elif solved:
                 #Fix this later
                 print("Puzzle is solved!")
+                self.state = "completed"
                 self.victory_screen()
         elif event.char == "\x08":
             event.widget.delete("all")
@@ -66,12 +68,12 @@ class SudokuGrid:
         event.widget.focus_set()
 
     def cube_focus(self, event):
-        event.widget.configure(bg="#bae0f7")
-        pass
+        if self.state != "completed":
+            event.widget.configure(bg="#bae0f7")
     
     def cube_lose_focus(self, event):
-        event.widget.configure(bg="white")
-        pass
+        if self.state != "completed":
+            event.widget.configure(bg="white")
 
     def victory_screen(self):
         frame = tk.Frame(self.root, width=(Settings.window_width/4), height=(Settings.window_height/10), highlightbackground='green', highlightthickness=0.5)
