@@ -48,7 +48,7 @@ class SudokuGrid:
                     self.cubes.append(canvas)
                     
     def key(self, event, row, col):
-        if event.char in Settings.numbers_char:
+        if event.char in Settings.numbers_char and self.state != "completed":
             event.widget.delete("all")
             event.widget.create_text(Settings.window_width/18, Settings.window_width/18, text=event.char, font="Times 25")
             solved = self.sudokuBoard.add_value(int(event.char), row, col)
